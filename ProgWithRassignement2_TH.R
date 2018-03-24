@@ -25,6 +25,7 @@ cachemean <- function(x, ...) {
       m
 }
 
+## The function can cache the inverse of a special "matrix" creata by makeCache
 makeCacheMatrix <- function(x = matrix()) {
       inverse <- NULL
       set <- function(y){
@@ -33,11 +34,15 @@ makeCacheMatrix <- function(x = matrix()) {
       }
       get <- function() x
       getInverse <- function() inverse
-      setInverse <- function(solveMatrix) inv <<- solveMatrix
+      setInverse <- function(solveMatrix) inverse <<- solveMatrix
       list(set = set, get = get, setInverse = setInverse, getInverse = getInverse)
 }
 
+## Cache solve compute thie inverse of this special "matrix" (create by makeCache)
+## then if the "matrix" as been calculated the function recover the inverse from the cache
+## 
 cacheSolve <- function(x, ...) {
+      ## this can be return an inverse of'x'
       inverse <- x$getInverse()
       if(!is.null(inverse)){
             message
